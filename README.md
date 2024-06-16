@@ -33,9 +33,6 @@ If this is your first install of the server howto just follow the directions as 
     * [Nuclear_option](#Nuclear_option)
     * [TOS_Terms_of_service_loop_bug](#Nuclear_option)
 * [First_use_and_how_users_login](#First_use_and_how_users_login)
-* [Reading_logs](#Reading_logs)
-* [UPGRADE-NOTES](#UPGRADE-NOTES)
-
 
 
 
