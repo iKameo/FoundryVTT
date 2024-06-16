@@ -1,5 +1,5 @@
 # FoundryVTT
-## Ubuntu 18.04 - nigix - https - ssl - basic auth - security
+## Ubuntu 22.04 - nigix - https - ssl - basic auth - security
 
 ### Contributors
 <b>LogosWorks</b> - Upaded howto - Fix for 1MB Upload limit in the Nginx Config file [https://github.com/meeki007/FoundryVTT-Server-HowTo/issues/1](https://github.com/meeki007/FoundryVTT-Server-HowTo/issues/1)
@@ -75,7 +75,7 @@ If you have a privileged user account you can skip this step
 <br>
 In terminal:
 ```
-$ adduser YourChosenNameHere
+adduser YourChosenNameHere
 ```
 <br>
 
@@ -84,7 +84,7 @@ Give your new user account sudo rights by appending (-a) the sudo group (-G) to 
 <br>
 In terminal:
 ```
-$ usermod -a -G sudo YourChosenNameHere
+usermod -a -G sudo YourChosenNameHere
 ```
 
 <br>
@@ -100,7 +100,7 @@ Keep settings or files during the upgrade if asked. Follow the suggestions prese
 <br>
 In terminal:
 ```
-$ sudo apt update && sudo apt upgrade -y
+sudo apt update && sudo apt upgrade -y
 ```
 <br>
 <br>
@@ -114,7 +114,7 @@ Install a firewall, enable it, and configure it only to allow network traffic th
 <br>
 In terminal:
 ```
-$ sudo apt install ufw
+sudo apt install ufw
 ```
 <br>
 
@@ -125,13 +125,13 @@ Enable access to SSH, HTTP, and HTTPS
 <br>
 In terminal:
 ```
-$ sudo ufw allow ssh
+sudo ufw allow ssh
 ```
 ```
-$ sudo ufw allow http
+sudo ufw allow http
 ```
 ```
-$ sudo ufw allow https
+sudo ufw allow https
 ```
 <br>
 
@@ -140,7 +140,7 @@ Now lets start UFW
 <br>
 In terminal:
 ```
-$ sudo ufw enable
+sudo ufw enable
 ```
 
 <br>
@@ -150,7 +150,7 @@ You can see what services are allowed and denied with:
 <br>
 In terminal:
 ```
-$ sudo ufw status
+sudo ufw status
 ```
 <br>
 
@@ -159,7 +159,7 @@ If you ever want to disable UFW, you can do so by typing:
 <br>
 In terminal:
 ```
-$ sudo ufw disable
+sudo ufw disable
 ```
 <br>
 <br>
@@ -170,7 +170,7 @@ Fail2ban is an application that examines server logs looking for repeated or aut
 <br>
 In terminal:
 ```
-$ sudo apt install fail2ban -y
+sudo apt install fail2ban -y
 ```
 <br>
 
@@ -180,7 +180,7 @@ Copy the included configuration file
 In terminal:
 
 ```
-$ sudo cp /etc/fail2ban/jail.conf /etc/fail2ban/jail.local
+sudo cp /etc/fail2ban/jail.conf /etc/fail2ban/jail.local
 ```
 <br>
 
@@ -189,7 +189,7 @@ And restart Fail2ban
 <br>
 In terminal:
 ```
-$ sudo service fail2ban restart
+sudo service fail2ban restart
 ```
 <br>
 <br>
@@ -205,7 +205,7 @@ Install development libraries, header files, and manpages for libssl and libcryp
 In terminal:
 
 ```
-$ sudo apt install -y libssl-dev
+sudo apt install -y libssl-dev
 ```
 <br>
 <br>
@@ -217,10 +217,10 @@ Install nodejs
 In terminal:
 
 ```
-$ curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
+curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
 ```
 ```
-$ sudo apt install -y nodejs
+sudo apt install -y nodejs
 ```
 <br>
 <br>
@@ -235,7 +235,7 @@ We can use $HOME variable to accomplish this
 <br>
 In terminal:
 ```
-$ mkdir -p $HOME/foundryvtt_server/{foundryvtt,foundrydata}
+mkdir -p $HOME/foundryvtt_server/{foundryvtt,foundrydata}
 ```
 <br>
 <br>
@@ -245,7 +245,7 @@ Move to the foundryvtt_server directory /home/YourChosenNameHere/foundryvtt_serv
 <br>
 In terminal:
 ```
-$ cd $HOME/foundryvtt_server
+cd $HOME/foundryvtt_server
 ```
 <br>
 <br>
@@ -257,7 +257,7 @@ Download and extract the latest Foundry Virtual Tabletop Linux version from Patr
 
 In terminal:
 ```
-$ wget https://patreon-link-here.zip -O foundryvtt.zip
+wget https://patreon-link-here.zip -O foundryvtt.zip
 ```
 Or if wget does not work use sftp to move the FoundryVTT.zip file to the /foundryvtt_server directory manually and rename it to foundryvtt.zip
 <br>
@@ -270,58 +270,19 @@ You may have to install unzip if its not installed on your server with: $ sudo a
 <br>
 In terminal:
 ```
-$ unzip foundryvtt.zip -d /$HOME/foundryvtt_server/foundryvtt/
+unzip foundryvtt.zip -d /$HOME/foundryvtt_server/foundryvtt/
 ```
 <br>
 <br>
 
 ##### Running_foundryvtt
-PM2 is a process manager for Node.js
-<br>
-Starting, stopping and monitoring foundryvtt at boot time and auto booting/restarting automatically will be done with pm2. This way if the server reboots or hangs foundryvtt will startup automatically
-<br>
-<br>
 In terminal:
 ```
-$ sudo npm install -g pm2
+screen
 ```
-<br>
-<br>
-Start foundryvtt with pm2
-<br>
-<br>
-
-In terminal:
 ```
-$ pm2 start $HOME/foundryvtt_server/foundryvtt/resources/app/main.js -- --port=30000 --dataPath=/$HOME/foundryvtt_server/foundrydata
+nodejs foundryvtt_server/resources/app/main.js --dataPath=$HOME/foundrydata
 ```
-<br>
-<br>
-Save the current pm2 setup
-<br>
-<br>
-
-In terminal:
-```
-$ pm2 save
-```
-<br>
-<br>
-pm2 Startup Script Generation
-<br>
-<br>
-
-In terminal:
-```
-$ pm2 startup systemd
-```
-<b>You should have got the opt-put asking you to:</b>
-<br>
-"[PM2] You have to run this command as root. Execute the following command:""
-<br>
-Make sure you copy and paste the command to the terminal and run it.
-<br>
-<br>
 
 ##### Testing_foundryvtt_Connection
 Foundryvtt should now be running. The fire wall is blocking the port at the moment.
@@ -333,7 +294,7 @@ Disable the firewall so we can test that the server is running/Hosting_to_the_wo
 
 In terminal:
 ```
-$ sudo ufw disable
+sudo ufw disable
 ```
 In your web browser of choice enter in http://your_server_ip:30000
 <br>
@@ -347,7 +308,7 @@ Enable the firewall because Right now any one on the web can access your foundry
 
 In terminal:
 ```
-$ sudo ufw enable
+sudo ufw enable
 ```
 
 ## Hosting_to_the_world
@@ -360,13 +321,13 @@ By default, Nginx is configured to start automatically when the server boots/reb
 
 In terminal:
 ```
-$ sudo apt install nginx
+sudo apt install nginx
 ```
 Check to see if Nginx is running
 
 In terminal:
 ```
-$ systemctl status nginx
+systemctl status nginx
 ```
 Check to see if Nginx is hosting properly.
 <br>
@@ -424,7 +385,7 @@ To the subdomain.domain.com that you own
 
 In terminal:
 ```
-$ sudo nano /etc/nginx/sites-available/foundryvtt.your_domain_name.com
+sudo nano /etc/nginx/sites-available/foundryvtt.your_domain_name.com
 ```
 This will open a text editor
 
@@ -496,7 +457,7 @@ To the subdomain.domain.com that you own
 
 In terminal:
 ```
-$ sudo ln -s /etc/nginx/sites-available/foundryvtt.your_domain_name.com /etc/nginx/sites-enabled/
+sudo ln -s /etc/nginx/sites-available/foundryvtt.your_domain_name.com /etc/nginx/sites-enabled/
 ```
 
 
@@ -504,7 +465,7 @@ To avoid a possible hash bucket memory problem that can arise from adding additi
 
 In terminal:
 ```
-$ sudo nano /etc/nginx/nginx.conf
+sudo nano /etc/nginx/nginx.conf
 ```
 Now uncomment (remove the # symbol) from the http section line <b>server_names_hash_bucket_size 64;</b> and change the <b>client_max_body_size 100M</b> so it looks like this:
 
@@ -523,14 +484,14 @@ Next, test to make sure that there are no syntax errors in any of your Nginx fil
 
 In terminal:
 ```
-$ sudo nginx -t
+sudo nginx -t
 ```
 
 Restart Nginx to enable your changes:
 
 In terminal:
 ```
-$ sudo systemctl restart nginx
+sudo systemctl restart nginx
 ```
 
 
@@ -538,13 +499,13 @@ $ sudo systemctl restart nginx
 
 In terminal:
 ```
-$ sudo rm /etc/nginx/sites-enabled/foundryvtt.your_domain_name.com
+sudo rm /etc/nginx/sites-enabled/foundryvtt.your_domain_name.com
 ```
 And don't forget to restart to effect changes
 
 In terminal:
 ```
-$ sudo systemctl restart nginx
+sudo systemctl restart nginx
 ```
 
 Test if the reverse proxy is working
@@ -560,13 +521,13 @@ Install certbot to get ssl certificates for domain
 
 In terminal:
 ```
-$ sudo add-apt-repository ppa:certbot/certbot
+sudo add-apt-repository ppa:certbot/certbot
 ```
 ```
-$ sudo apt install certbot
+sudo apt install certbot
 ```
 ```
-$ sudo apt-get install python-certbot-nginx
+sudo apt-get install python-certbot-nginx
 ```
 
 Generate the certificate for domain
@@ -579,7 +540,7 @@ To the subdomain.domain.com that you own
 
 In terminal:
 ```
-$ sudo certbot --nginx -d foundryvtt.your_domain_name.com
+sudo certbot --nginx -d foundryvtt.your_domain_name.com
 ```
 When asked to redirect HTTP traffic to HTTPS, removing HTTP access:
 <br>
@@ -597,7 +558,7 @@ Test that lets encrypt cerbot is working and will automatically update certifica
 
 In terminal:
 ```
-$ sudo certbot renew --dry-run
+sudo certbot renew --dry-run
 ```
 
 ##### Securing_Setup_Page
@@ -606,20 +567,20 @@ Without this anyone can change the settings or delete your game.
 
 In terminal:
 ```
-$ sudo apt install apache2-utils
+sudo apt install apache2-utils
 ```
 Create a directory /home/YourChosenNameHere/foundryvtt_server/htpasswd/ to store the password file
 
 In terminal:
 ```
-$ mkdir -p $HOME/foundryvtt_server/htpasswd
+mkdir -p $HOME/foundryvtt_server/htpasswd
 ```
 
 Create the password, the last word admin being the user name created for the login
 
 In terminal:
 ```
-$ sudo htpasswd -c $HOME/foundryvtt_server/htpasswd/.htpasswd admin
+sudo htpasswd -c $HOME/foundryvtt_server/htpasswd/.htpasswd admin
 ```
 
 Now to add the password to the /setup page by editing the server block for the url
@@ -803,13 +764,13 @@ Next, test to make sure that there are no syntax errors in any of your Nginx fil
 
 In terminal:
 ```
-$ sudo nginx -t
+sudo nginx -t
 ```
 Restart Nginx to enable your changes:
 
 In terminal:
 ```
-$ sudo systemctl restart nginx
+sudo systemctl restart nginx
 ```
 
 Test that user name and password are working
@@ -831,24 +792,24 @@ Using any method you choose it would be wise to copy the entire folder located a
 
 If you make a mistake and the server starts to spit error msg's at you, deleting the Contents of the data inside the /foundrydata folder will give you a fresh start.
 
-To do this stop the foundryvtt server, first get the status of pm2
+To do this stop the foundryvtt server, first reattach to the scrren session with:
 
 In terminal:
 ```
-$ pm2 status
+screen -r
 ```
 
-I see the process main, lest stop it.
+And then stop it with.
 
 In terminal:
 ```
-$ pm2 stop main
+CRTL+C
 ```
 Now we can remove the files
 
 In terminal:
 ```
-$ sudo rm -rfv /$HOME/foundryvtt_server/foundrydata/
+sudo rm -rfv /$HOME/foundryvtt_server/foundrydata/
 ```
 
 It would be best if you had a backup of the folder so you can start from the last backup by copying the files to the /foundrydata directory after removing all the files.
@@ -857,7 +818,7 @@ Now bing the server back up
 
 In terminal:
 ```
-$ pm2 start main
+nodejs foundryvtt_server/resources/app/main.js --dataPath=$HOME/foundrydata
 ```
 
 If you now login to the server https://foundryvtt.your_domain_name.com you will find it reset to stock or backup if you moved the files.
@@ -870,7 +831,7 @@ Stop nginx
 
 In terminal:
 ```
-$ sudo systemctl stop nginx
+sudo systemctl stop nginx
 ```
 <br>
 
@@ -878,7 +839,14 @@ Stop foundryvtt
 
 In terminal:
 ```
-$ pm2 stop main
+screen -r
+```
+
+And then stop it with.
+
+In terminal:
+```
+CRTL+C
 ```
 <br>
 
@@ -888,7 +856,7 @@ Delete foundryvtt folder
 
 In terminal:
 ```
-$ sudo rm -rfv /$HOME/foundryvtt_server/
+sudo rm -rfv /$HOME/foundryvtt_server/
 ```
 <br>
 
@@ -896,7 +864,7 @@ Create a new foundryvtt folder
 
 In terminal:
 ```
-$ mkdir -p $HOME/foundryvtt_server/{foundryvtt,foundrydata}
+mkdir -p $HOME/foundryvtt_server/{foundryvtt,foundrydata}
 ```
 <br>
 
@@ -904,7 +872,7 @@ enter the dir
 
 In terminal:
 ```
-$ cd $HOME/foundryvtt_server
+cd $HOME/foundryvtt_server
 ```
 <br>
 
@@ -914,7 +882,7 @@ Download and extract the latest Foundry Virtual Tabletop Linux version from Patr
 
 In terminal:
 ```
-$ wget https://patreon-link-here.zip -O foundryvtt.zip
+wget https://patreon-link-here.zip -O foundryvtt.zip
 ```
 <br>
 
@@ -924,7 +892,7 @@ You may have to install unzip if its not installed on your server with: $ sudo a
 
 In terminal:
 ```
-$ unzip foundryvtt.zip -d /$HOME/foundryvtt_server/foundryvtt/
+unzip foundryvtt.zip -d /$HOME/foundryvtt_server/foundryvtt/
 ```
 <br>
 
@@ -932,7 +900,7 @@ Create a directory /home/YourChosenNameHere/foundryvtt_server/htpasswd/ to store
 
 In terminal:
 ```
-$ mkdir -p $HOME/foundryvtt_server/htpasswd
+mkdir -p $HOME/foundryvtt_server/htpasswd
 ```
 <br>
 
@@ -940,15 +908,15 @@ Create the password, the last word admin being the user name created for the log
 
 In terminal:
 ```
-$ sudo htpasswd -c $HOME/foundryvtt_server/htpasswd/.htpasswd admin
+sudo htpasswd -c $HOME/foundryvtt_server/htpasswd/.htpasswd admin
 ```
 <br>
 
 Start foundryvtt
 
-In terminal:
+In the screen session:
 ```
-$ pm2 start main
+nodejs foundryvtt_server/resources/app/main.js --dataPath=$HOME/foundrydata
 ```
 <br>
 
@@ -956,7 +924,7 @@ Start nginx
 
 In terminal:
 ```
-$ sudo systemctl start nginx
+sudo systemctl start nginx
 ```
 <br>
 
@@ -1079,103 +1047,3 @@ Now go enjoy FoundryVTT!
 <b>END OF TUTORIAL</b>
 
 <br>
-
-<br>
-
-## Reading_logs
-If you need to see the output of the logs from foundryvtt 
-In terminal:
-```
-$ pm2 logs
-```
-use CTRL+C (hold contol key down and press C) to exit the logs
-
-<br>
-
-<br>
-
-<br>
-
-## UPGRADE-NOTES
-
-
-
-#### Foundryvtt 0.47 to 0.50 & 0.51
-#### DO THIS BEFORE UPGRADING to 0.50 or 0.51
-
-Upgrade nodeJS from ver-10 to ver-12
-
-Stop foundryvtt
-In terminal:
-```
-$ pm2 stop main
-```
-<br>
-
-Stop nginx
-In terminal:
-```
-$ sudo systemctl stop nginx
-```
-<br>
-
-add nodeJS-12 to the repository
-In terminal:
-```
-$ curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
-```
-<br>
-
-Install nodeJS-12
-In terminal:
-```
-$ sudo apt install -y nodejs
-```
-<br>
-
-check that nodeJS-12 is installed
-In terminal:
-```
-$ node -v
-```
-<br>
-
-While we are here might as well update npm
-In terminal:
-```
-$ sudo npm install -g npm
-```
-<br>
-
-Start foundryvtt
-
-In terminal:
-```
-$ pm2 start main
-```
-<br>
-
-Start nginx
-
-In terminal:
-```
-$ sudo systemctl start nginx
-```
-<br>
-
-You should now be able to login to foundryvtt server and upgrade to 0.50 or 0.51
-<br>
-0.50 - remember to apply the pinned fixes listed in the 0.50 discord channel 
-
-0.50 and 0.51 also remember to install the D&D5e version which is designed for 0.5.0 and 0.51
-
-Remember to restart foundryvtt after applying update
-In terminal:
-```
-$ pm2 restart main
-```
-<br>
-
-
-
-
