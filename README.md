@@ -39,22 +39,12 @@ If this is your first install of the server howto just follow the directions as 
 ## Introduction
 This Guide is for setting up a <b>secure</b> Dedicated Server.
 <br>
-This guide assumes you have a running server with Ubuntu 18.04 and that you have access to terminal on the server. You can host this yourself however this guide does not address port forwarding from routers or DMZ settings and or ipv6 settings.
+This guide assumes you have a running server with Ubuntu 22.04 and that you have access to terminal on the server. You can host this yourself however this guide does not address port forwarding from routers or DMZ settings and or ipv6 settings.
 
 You need a Domain Name and the ability to point it to your IP address. Let’s Encrypt doesn’t issue certificates for bare IP addresses, only domain names. You’ll need to register a domain name in order to get a Let’s Encrypt certificate.
 
 What your server needs: a visable IP address to the internet to include if you wish a ipv6 address.
 
-I used a VPS (Virtual Private Server) provider. For less than $10 a month, I have a server, and I have complete root access to and can spin up Ubuntu on. I used https://servercheap.net/pricing.php I was not paid or compensated to link them. Its just what I use.
-<br>
-<br>
-If all you are going to use this server for is FoundryVTT you will only need 1gb of ram and 1 cpu however I recommend 2gb of ram and 2 cpu's
-<br>
-<br>
-MORE! ram and cpu if you plan on running video chat and voice across multiple players. You can always upgrade/pay for more as needed
-<br>
-<br>
-This Guide is <b>not</b> for individuals who fear the CLI (command line interface). If you have issues your going to need to read and search. You can always open an issue here https://github.com/meeki007/FoundryVTT-Server-HowTo/issues and if i have time I can try to help.
 <br>
 
 ## Setup_Server
